@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon source/index.ts",
+    "start": "ts-node source/index.ts"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,24 @@
   "bugs": {
     "url": "https://github.com/narendrago999/ecommerce_mini_project_backend/issues"
   },
-  "homepage": "https://github.com/narendrago999/ecommerce_mini_project_backend#readme"
+  "homepage": "https://github.com/narendrago999/ecommerce_mini_project_backend#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/nodemailer": "^6.4.10",
+    "@types/pg": "^8.10.2",
+    "@types/sequelize": "^4.28.15",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.5",
+    "pg": "^8.11.3",
+    "sequelize": "^6.33.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
 }
