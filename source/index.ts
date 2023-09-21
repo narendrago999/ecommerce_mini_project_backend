@@ -3,11 +3,11 @@ const express = require('express')
 const cors = require('cors')
 const http = require('http')
 const dotenv = require('dotenv')
-const port = process.env.PORT
 const routes = require('./routes/userRoutes')
 const sequelize = require('./database/sequelize')
 const app = express()
 dotenv.config()
+const port = process.env.PORT
 app.use(cors())
 app.use(express.json())
 app.use(routes)
