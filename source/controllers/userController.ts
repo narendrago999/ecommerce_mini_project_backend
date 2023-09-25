@@ -11,10 +11,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const jwt_secreat_key = process.env.JWT_KEY;
 class UserController {
-  private static async checkUser(user: any) {
-    if (user) {
+  private static async checkUser(email: any) {
+    if (email) {
       const userExist = await User.findOne({
-        where: { user_email: user.user_email },
+        where: { user_email: email },
       });
       if (userExist) {
         return true;
@@ -23,7 +23,6 @@ class UserController {
       }
     }
   }
-
   private static async createJwtToken(userExist: any) {
     const token = await jwt.sign({ userExist }, jwt_secreat_key, {
       expiresIn: "1d",
@@ -68,10 +67,7 @@ class UserController {
         if (decoded.userExist) {
           const userVerification = await User.findOne({
             where: {
-              [Op.and]: [
-                { EMP_ID: decoded.userExist.EMP_ID },
-                { Employee_Email: decoded.userExist.Employee_Email },
-              ],
+             user_email: decoded.userExist.user_email
             },
           });
           console.log("query : ", userVerification?.dataValues);
@@ -80,10 +76,7 @@ class UserController {
               { is_activated: true },
               {
                 where: {
-                  [Op.and]: [
-                    { EMP_ID: decoded.userExist.EMP_ID },
-                    { Employee_Email: decoded.userExist.Employee_Email },
-                  ],
+                  user_email: decoded.userExist.user_email
                 },
               }
             );
@@ -95,22 +88,24 @@ class UserController {
   public async verify(req: Request, res: Response) {
     const parsedUrl = await url.parse(req.url, true);
     await UserController.verifyToken(parsedUrl.query.token).then(() => {
-      res.send("<h1>Verification success</h1>");
+      setTimeout(()=>{
+        res.redirect('http://localhost:3000/signin')
+      },1000)
     });
   }
   // User Registration
   public async signup_user(req: Request, res: Response) {
     //   const product = {
-    //      product_title: "T-shirt",
-    //    product_price: "$200",
-    //    product_rating: 2.5,
-    //    product_category: "Men",
-    //    product_brand: "Jockey",
+    //      product_title: "Levis Pent",
+    //    product_price: "$210",
+    //    product_rating: 0.8,
+    //    product_category: "Kids",
+    //    product_brand: "Levis",
     //    product_colour: "Assorted",
     //    product_fit_type: "Regular",
     // product_style: "Solid Style",
-    //    product_neck_style: "Round Neck",
-    //    product_description: "This is product description",
+    //    product_neck_style: "V Neck",
+    //    product_description: "This is product description of Shirt",
     //   }
     //   await ProductDetails.create(product)
     const userInfo = req.body;
@@ -122,7 +117,7 @@ class UserController {
         userInfo.password != ""
       ) {
         const userExist: boolean | undefined = await UserController.checkUser(
-          userInfo
+          userInfo.user_email
         );
         console.log(userExist);
 
@@ -166,16 +161,44 @@ class UserController {
       console.log(error);
     }
   }
-
-  // private static async validate_user(email,password){
-
-  // }
-
+  private static async get_user(email:string){
+    const user  =  await User.findOne({where:{user_email:email}})
+    return user?.dataValues
+  }
+  private static async validate_user(email: string, password: string){
+    try {
+      const user_exists:boolean|undefined = await UserController.checkUser(email)
+      if(user_exists){
+        const user = await UserController.get_user(email)
+        const result = await bcrypt.compare(password,user.password)
+          console.log("result", result)
+          console.log("result", user.is_activated)
+          if(result && user.is_activated){
+            return true
+          }else{
+            return false
+          }
+      }else{
+        return false
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+  // User Login
   public async signin_user(req: Request, res: Response) {
     const { email, password } = req.body;
     try {
       if (email && password) {
-        // const validate_user = UserController.validate_user(email,password)
+        const validate_user:boolean|undefined = await UserController.validate_user(email,password)
+        if(validate_user){
+          const user = await UserController.get_user(email)
+          const token = await UserController.createJwtToken(user)
+          res.status(200).json({success:true,token})
+        }else{
+          res.status(200).json({success:false})
+        }
       } else {
         res.status(200).json({ message: "All Fields are Required" });
       }

@@ -4,6 +4,7 @@ const cors = require("cors");
 const http = require("http");
 const dotenv = require("dotenv");
 const routes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
 const sequelize = require("./database/sequelize");
 const app = express();
 dotenv.config();
@@ -11,6 +12,7 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(routes);
+app.use(productRoutes);
 const httpServer = http.createServer(app);
 
 sequelize
