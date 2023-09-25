@@ -3,26 +3,48 @@
   const sequelize = require("../database/sequelize")
   
   
-  class User extends Model {
-    public ProductId!: string;
-    public ProductName!: string;
-    public ProductPrice!: string;
-    public ProductCategory!: string;
-    public ProductDescription!: string;
+  class ProductDetails extends Model {
+    public product_title!: string;
+    public product_price!: string;
+    public product_rating!: number;
+    public product_category!: string;
+    public product_brand!: string;
+    public product_colour!: string;
+    public product_fit_type!: string;
+    public product_style!: string;
+    public product_neck_style!: string;
+    public product_description!: string;
   }
-  User.init(
+  ProductDetails.init(
     {
-      FirstName: {
+      product_title: {
         type: DataTypes.STRING
       },
-      LastName: {
-        type: DataTypes.STRING
-      },
-      User_Email: {
+      product_price: {
         type: DataTypes.STRING,
-        unique:true
       },
-      Password: {
+      product_rating: {
+        type: DataTypes.FLOAT
+      },
+      product_category: {
+        type: DataTypes.STRING
+      },
+      product_brand: {
+        type: DataTypes.STRING
+      },
+      product_colour: {
+        type: DataTypes.STRING
+      },
+      product_fit_type: {
+        type: DataTypes.STRING
+      },
+      product_style: {
+        type: DataTypes.STRING
+      },
+      product_neck_style: {
+        type: DataTypes.STRING
+      },
+      product_description: {
         type: DataTypes.STRING
       },
       is_activated: {
@@ -31,10 +53,10 @@
       }
     },
     {
-      tableName: 'Users',
+      tableName: 'ProductDetails',
       sequelize,
     }
   );
   
-  export { User };
+  export { ProductDetails };
   
