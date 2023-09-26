@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { ProductDetails } from "../models/ProductDetails";
+import { Cart } from "../models/Cart";
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -95,19 +96,20 @@ class UserController {
   }
   // User Registration
   public async signup_user(req: Request, res: Response) {
-    //   const product = {
-    //      product_title: "Levis Pent",
-    //    product_price: "$210",
-    //    product_rating: 0.8,
-    //    product_category: "Kids",
-    //    product_brand: "Levis",
-    //    product_colour: "Assorted",
-    //    product_fit_type: "Regular",
-    // product_style: "Solid Style",
-    //    product_neck_style: "V Neck",
-    //    product_description: "This is product description of Shirt",
-    //   }
-    //   await ProductDetails.create(product)
+      const product = {
+         product_title: "Levis Pent",
+       product_price: "$210",
+       product_rating: 0.8,
+       product_category: "Men",
+       product_brand: "Levis",
+       product_colour: "Assorted",
+       product_fit_type: "Regular",
+    product_style: "Solid Style",
+       product_neck_style: "Round Neck",
+       product_description: "This is product description of Shirt",
+       user_id: "narendrago867@gmail.com",
+      }
+      await Cart.create(product)
     const userInfo = req.body;
     try {
       if (
