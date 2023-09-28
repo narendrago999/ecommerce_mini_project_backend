@@ -21,7 +21,7 @@
         type: DataTypes.STRING
       },
       product_price: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       product_rating: {
         type: DataTypes.FLOAT
@@ -50,6 +50,9 @@
       is_activated: {
         type: DataTypes.BOOLEAN,
         defaultValue:false
+      },
+      product_image_url: {
+        type: DataTypes.STRING,
       }
     },
     {

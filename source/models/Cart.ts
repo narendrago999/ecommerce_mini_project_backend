@@ -18,11 +18,14 @@
   }
   Cart.init(
     {
+      product_id: {
+        type: DataTypes.INTEGER
+      },
       product_title: {
         type: DataTypes.STRING
       },
       product_price: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       product_rating: {
         type: DataTypes.FLOAT
@@ -46,6 +49,9 @@
         type: DataTypes.STRING
       },
       product_description: {
+        type: DataTypes.STRING
+      },
+      product_image_url: {
         type: DataTypes.STRING
       },
       user_id:{

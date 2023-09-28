@@ -20,39 +20,48 @@ class ProductController {
         console.log(error);
     }
  }
- public async get_cart(req:Request,res:Response){
-     const user = req.body
-     console.log("user cart data",user);
-     try{
-         const cart_data = await Cart.findAll({where:{user_id:user.userExist.user_email}})
-         console.log("cartData",cart_data);
+//  public async get_cart(req:Request,res:Response){
+//      const user = req.body
+//      console.log("user cart data",user);
+//      try{
+//          const cart_data = await Cart.findAll({where:{user_id:user.userExist.user_email}})
+//          console.log("cartData",cart_data);
          
-         res.status(200).json({data:cart_data})
-     }catch(error){
-        console.log(error);
+//          res.status(200).json({data:cart_data})
+//      }catch(error){
+//         console.log(error);
         
-     }
+//      }
      
 
      
- }
+//  }
 
 
- public async delete_cart(req:Request, res:Response){
+//  public async delete_cart(req:Request, res:Response){
+//     const user = req.body
+//     const id = req.params.id
+//     console.log("delete cart user",user, id)
+//     try {
+//         await Cart.destroy({where:{[Op.and]:[{id:id},{user_id:user.userExist.user_email}]}}).then((deletedCount)=>{
+//             if (deletedCount > 0) {
+//                 res.status(200).json({data:"Deleted Success"})
+//             } else{
+//                   res.status(200).json({data:"Deleted Successfully"})
+
+//               }
+//         })
+//     } catch (error) {
+//         console.log(error);
+//     }
+//  }
+
+public async address_form(req:Request,res:Response){
     const user = req.body
-    const id = req.params.id
-    console.log("delete cart user",user, id)
-    try {
-        await Cart.destroy({where:{[Op.and]:[{id:id},{user_id:user.userExist.user_email}]}}).then((deletedCount)=>{
-            if (deletedCount > 0) {
-                res.status(200).json({message:"Deleted Success"})
-              } 
-        })
-    } catch (error) {
-        console.log(error);
+    if(user){
+        res.status(200).json({user})
     }
- }
-
+}
 
 
 }

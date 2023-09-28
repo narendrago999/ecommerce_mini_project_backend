@@ -18,14 +18,16 @@ declare global {
 export const token_verify =  async (req:Request,res:Response,next: NextFunction)=>{
     const token = req.headers.authorization
     console.log("token", token);
-    
-    await jwt.verify(token,jwt_secret_key,(err: any,decoded: object)=>{
-        if(err){
-            res.status(401).json({message:"Token Not Verified"})
-        }
-        const user = decoded as User
-        req.body = user
-        next()
-    })
-    
+    if(token){
+      await jwt.verify(token,jwt_secret_key,(err: any,decoded: object)=>{
+          if(err){
+              res.status(401).json({message:"Token Not Verified"})
+          }
+          const user = decoded as User
+          req.body = user
+          next()
+      })
+    }else{
+      res.status(200).json({message:"Token Not Found"})
+    }
 }

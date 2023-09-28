@@ -5,6 +5,7 @@ const http = require("http");
 const dotenv = require("dotenv");
 const routes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+const cartRouter = require("./routes/cartRoutes");
 const sequelize = require("./database/sequelize");
 const app = express();
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 app.use(productRoutes);
+app.use(cartRouter);
 
 const httpServer = http.createServer(app);
 
